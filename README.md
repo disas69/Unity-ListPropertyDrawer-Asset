@@ -1,7 +1,9 @@
 # Unity-List-Property-Drawer
 
-A simple solution meant to improve Unity array/list editor UI. Works from the box and supports add/remove and reorder of the array/list elements.
+A simple solution meant to improve Unity array/list editor UI. Works out of the box and supports add/remove and reorder of the array/list elements.
+
 Doesn't support nested arrays/lists (yet).
+
 ```
     public class ListTest : MonoBehaviour
     {
@@ -16,4 +18,5 @@ Doesn't support nested arrays/lists (yet).
         public bool[] ExcitingBools;
     }
 ```
+
 <img src="Images/list_test1.PNG" width = "400">
