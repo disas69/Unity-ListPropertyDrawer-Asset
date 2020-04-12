@@ -24,7 +24,7 @@ namespace Framework.Editor
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     property.isExpanded = EditorGUILayout.Foldout(property.isExpanded, new GUIContent($"{property.displayName} ({property.arraySize})"));
-
+                    
                     if (GUILayout.Button(new GUIContent("+", "Add new element"), GUILayout.Width(40f)))
                     {
                         property.InsertArrayElementAtIndex(property.arraySize);
@@ -57,7 +57,7 @@ namespace Framework.Editor
 
                                     using (new GUIEnabled(i > 0))
                                     {
-                                        if (GUILayout.Button("<", GUILayout.Width(25f)))
+                                        if (GUILayout.Button(new GUIContent("<", "Move element back"), GUILayout.Width(25f)))
                                         {
                                             property.MoveArrayElement(i, i - 1);
                                         }
@@ -65,13 +65,13 @@ namespace Framework.Editor
 
                                     using (new GUIEnabled(i < count - 1))
                                     {
-                                        if (GUILayout.Button(">", GUILayout.Width(25f)))
+                                        if (GUILayout.Button(new GUIContent(">", "Move element forward"), GUILayout.Width(25f)))
                                         {
                                             property.MoveArrayElement(i, i + 1);
                                         }
                                     }
 
-                                    if (GUILayout.Button(new GUIContent("X", "Remove element"), GUILayout.Width(25f)))
+                                    if (GUILayout.Button(new GUIContent("×", "Remove element"), GUILayout.Width(25f)))
                                     {
                                         indexToRemove = i;
                                     }
