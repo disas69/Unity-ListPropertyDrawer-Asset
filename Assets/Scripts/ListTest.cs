@@ -23,6 +23,7 @@ namespace Framework.Tests
         public Vector3 Vector;
         public float Value;
         public GameObject GameObject;
+        public List<TestStruct> Structs;
     }
 
     [Serializable]
@@ -30,8 +31,8 @@ namespace Framework.Tests
     {
         public SomeType Type;
         public int Value;
-        //Nested lists are not supported yet :(
-        public int[] BadInts;
+        public string Test;
+        public int[] NormalInts;
     }
 
     public enum SomeType

@@ -7,12 +7,12 @@ namespace Framework.Editor
 {
     public static class ListPropertyDrawer
     {
-        public static void OnGUI(SerializedProperty property)
+        public static void Draw(SerializedProperty property)
         {
-            OnGUI(property, DrawElement);
+            Draw(property, DefaultDrawElement);
         }
 
-        public static void OnGUI(SerializedProperty property, Action<SerializedProperty, int> elementDrawCallback)
+        public static void Draw(SerializedProperty property, Action<SerializedProperty, int> elementDrawCallback)
         {
             if (!property.isArray)
             {
@@ -92,11 +92,13 @@ namespace Framework.Editor
             }
         }
 
-        private static void DrawElement(SerializedProperty element, int index)
+        private static void DefaultDrawElement(SerializedProperty element, int index)
         {
+            var guiContent = new GUIContent($"Element {index}");
+
             if (element.propertyType == SerializedPropertyType.Generic)
             {
-                element.isExpanded = EditorGUILayout.Foldout(element.isExpanded, $"Element [{index}]");
+                element.isExpanded = EditorGUILayout.Foldout(element.isExpanded, guiContent);
 
                 if (element.isExpanded)
                 {
@@ -106,7 +108,14 @@ namespace Framework.Editor
                         {
                             foreach (var property in element.GetChildren())
                             {
-                                EditorGUILayout.PropertyField(property, true);
+                                if (property.isArray && property.propertyType != SerializedPropertyType.String)
+                                {
+                                    Draw(property, DefaultDrawElement);
+                                }
+                                else
+                                {
+                                    EditorGUILayout.PropertyField(property, true);
+                                }
                             }
                         }
                     }
@@ -114,7 +123,7 @@ namespace Framework.Editor
             }
             else
             {
-                EditorGUILayout.PropertyField(element, new GUIContent($"{element.propertyType} [{index}]"), true);
+                EditorGUILayout.PropertyField(element, guiContent, true);
             }
         }
     }

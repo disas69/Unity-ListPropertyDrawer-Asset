@@ -6,7 +6,7 @@ namespace Framework.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(UnityEngine.Object), true)]
-    public class CustomInspector : UnityEditor.Editor
+    public class CustomInspectorEditor : UnityEditor.Editor
     {
         private List<SerializedProperty> _serializedProperties;
 
@@ -30,9 +30,9 @@ namespace Framework.Editor
                 }
                 else
                 {
-                    if (property.isArray)
+                    if (property.isArray && property.propertyType != SerializedPropertyType.String)
                     {
-                        ListPropertyDrawer.OnGUI(property);
+                        ReorderableListPropertyDrawer.Draw(property);
                     }
                     else
                     {
@@ -60,6 +60,17 @@ namespace Framework.Editor
             }
 
             return serializedProperties;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var property in _serializedProperties)
+            {
+                if (property.isArray && property.propertyType != SerializedPropertyType.String)
+                {
+                    ReorderableListPropertyDrawer.Dispose(property);
+                }
+            }
         }
     }
 }
